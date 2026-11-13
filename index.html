@@ -537,4 +537,89 @@
         lucide.createIcons();
       }
     } catch (e) {
-      console.
+      console.log("Lucide Error", e);
+    }
+
+    // 2. Chạy Đồng Hồ
+    var clockEl = document.getElementById('clock');
+    function updateClock() {
+      if (!clockEl) return;
+      var now = new Date();
+      var hours = String(now.getHours()).padStart(2, '0');
+      var minutes = String(now.getMinutes()).padStart(2, '0');
+      var seconds = String(now.getSeconds()).padStart(2, '0');
+      clockEl.textContent = hours + ':' + minutes + ':' + seconds;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // 3. Chuyển Tab Bảng Giá Tự Động
+    var currentTab = 0;
+    var totalTabs = 3;
+    var tabContents = document.querySelectorAll('.tab-content');
+    var tabBtns = document.querySelectorAll('.tab-btn');
+
+    function switchTab(index) {
+      currentTab = index;
+      for (var i = 0; i < tabContents.length; i++) {
+        if (i === index) {
+          tabContents[i].classList.remove('hidden');
+        } else {
+          tabContents[i].classList.add('hidden');
+        }
+      }
+      for (var j = 0; j < tabBtns.length; j++) {
+        if (j === index) {
+          tabBtns[j].className = "tab-btn px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 bg-amber-500 text-slate-950 shadow";
+        } else {
+          tabBtns[j].className = "tab-btn px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-300 text-slate-200 hover:text-white hover:bg-slate-800/70";
+        }
+      }
+    }
+
+    window.switchTab = switchTab;
+
+    setInterval(function() {
+      currentTab = (currentTab + 1) % totalTabs;
+      switchTab(currentTab);
+    }, 12000);
+
+    // 4. HIỆU ỨNG ĐỔI PHÔNG NỀN NOEL LIÊN TỤC
+    var bgLayer = document.getElementById('noel-bg-layer');
+    var noelThemes = [
+      "radial-gradient(circle at 20% 25%, #991b1b 0%, #450a0a 55%, #1e1b4b 100%)",
+      "radial-gradient(circle at 75% 30%, #065f46 0%, #022c22 55%, #0f172a 100%)",
+      "radial-gradient(circle at 50% 20%, #92400e 0%, #451a03 55%, #1c1917 100%)"
+    ];
+    var bgIdx = 0;
+    setInterval(function() {
+      bgIdx = (bgIdx + 1) % noelThemes.length;
+      if (bgLayer) {
+        bgLayer.style.background = noelThemes[bgIdx];
+      }
+    }, 6000);
+
+    // 5. HIỆU ỨNG BIỂU TƯỢNG NOEL RƠI LIÊN TỤC
+    var xmasIcons = ["❄️", "🎄", "✨", "🎁", "⛄", "🔔"];
+    function createXmasEffect() {
+      var item = document.createElement("div");
+      item.classList.add("xmas-item");
+      item.innerText = xmasIcons[Math.floor(Math.random() * xmasIcons.length)];
+      item.style.left = (Math.random() * 96 + 2) + "vw";
+      item.style.fontSize = (Math.random() * 18 + 16) + "px";
+      item.style.animationDuration = (Math.random() * 4 + 5) + "s";
+      document.body.appendChild(item);
+
+      setTimeout(function() {
+        item.remove();
+      }, 9500);
+    }
+    for (var k = 0; k < 6; k++) {
+      setTimeout(createXmasEffect, k * 300);
+    }
+    setInterval(createXmasEffect, 600);
+
+  });
+  </script>
+</body>
+</html>
